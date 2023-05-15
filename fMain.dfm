@@ -3,7 +3,7 @@ object MainForm: TMainForm
   Top = 0
   Caption = 'FileToTelegram, x.x'
   ClientHeight = 352
-  ClientWidth = 759
+  ClientWidth = 541
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -13,13 +13,12 @@ object MainForm: TMainForm
   OldCreateOrder = False
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object TopPanel: TsPanel
     Left = 0
     Top = 0
-    Width = 759
+    Width = 541
     Height = 55
     Align = alTop
     TabOrder = 0
@@ -53,11 +52,11 @@ object MainForm: TMainForm
   object StatusBar1: TsStatusBar
     Left = 0
     Top = 333
-    Width = 759
+    Width = 541
     Height = 19
     Panels = <
       item
-        Width = 350
+        Width = 150
       end
       item
         Width = 48
@@ -69,74 +68,83 @@ object MainForm: TMainForm
   object sPageControl: TsPageControl
     Left = 0
     Top = 55
-    Width = 759
+    Width = 541
     Height = 278
-    ActivePage = tsSettings
+    ActivePage = tsLog
     Align = alClient
     Style = tsButtons
     TabHeight = 26
     TabOrder = 2
     ActiveIsBold = True
     TabPadding = 10
-    object tsMain: TsTabSheet
-      Caption = #1044#1072#1085#1085#1099#1077
-    end
     object tsSettings: TsTabSheet
       Caption = #1053#1072#1089#1090#1088#1086#1081#1082#1080
-      object TelegramNoComboBox: TsComboBox
-        Left = 18
-        Top = 27
-        Width = 127
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+      DesignSize = (
+        533
+        242)
+      object TestTelegramButton: TsButton
+        Left = 315
+        Top = 17
+        Width = 50
         Height = 24
+        Caption = 'Test'
         TabOrder = 0
-        OnClick = OnChangeControls
+        OnClick = TestTelegramButtonClick
+      end
+      object ChannelEdit: TsEdit
+        Left = 152
+        Top = 16
+        Width = 157
+        Height = 24
+        TabOrder = 1
+        Text = '-1001735526780'
+        BoundLabel.Active = True
+        BoundLabel.Indent = 4
+        BoundLabel.Caption = #1050#1086#1076' '#1082#1072#1085#1072#1083#1072' '#1090#1077#1083#1077#1075#1088#1072#1084
+      end
+      object DirectoryEdit: TsDirectoryEdit
+        Left = 166
+        Top = 56
+        Width = 361
+        Height = 24
+        Anchors = [akLeft, akTop, akRight]
+        MaxLength = 255
+        TabOrder = 2
+        BoundLabel.Active = True
+        BoundLabel.Indent = 4
+        BoundLabel.Caption = #1055#1072#1087#1082#1072' '#1076#1083#1103' '#1086#1090#1089#1083#1077#1078#1080#1074#1072#1085#1080#1103
+        CheckOnExit = True
+        Text = '.\OUT\'
+        Root = 'rfDesktop'
+      end
+    end
+    object tsLog: TsTabSheet
+      Caption = #1051#1086#1075
+      object LogMemo: TsMemo
+        Left = 0
+        Top = 0
+        Width = 533
+        Height = 242
+        Align = alClient
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -13
         Font.Name = 'Tahoma'
         Font.Style = []
         ParentFont = False
-        BoundLabel.Active = True
+        ScrollBars = ssVertical
+        TabOrder = 0
         BoundLabel.Indent = 4
-        BoundLabel.Caption = #1050#1072#1085#1072#1083' '#1090#1077#1083#1077#1075#1088#1072#1084
-        BoundLabel.Layout = sclTopLeft
-        Items.Strings = (
-          '0 - '#1085#1077' '#1086#1090#1089#1099#1083#1072#1090#1100
-          '1'
-          '2'
-          '3'
-          '4'
-          '5'
-          '6'
-          '7 - '#1075#1088#1091#1087#1087#1072' '#1050#1088#1080#1087#1090#1086
-          '8 - '#1076#1083#1103' '#1048#1075#1086#1088#1103
-          '9 - '#1076#1083#1103' '#1070#1088#1080#1103
-          '10 - '#1076#1083#1103' '#1045#1083#1077#1085#1099
-          '11')
-        Style = csDropDownList
-        Text = '0 - '#1085#1077' '#1086#1090#1089#1099#1083#1072#1090#1100
+        ExplicitTop = -2
+        ExplicitWidth = 665
+        ExplicitHeight = 293
       end
-      object TestTelegramButton: TsButton
-        Left = 153
-        Top = 27
-        Width = 50
-        Height = 24
-        Caption = 'Test'
-        TabOrder = 1
-        OnClick = TestTelegramButtonClick
-      end
-      object SendLogsToTelegramButton: TsButton
-        Left = 18
-        Top = 61
-        Width = 185
-        Height = 26
-        Caption = #1054#1090#1087#1088#1072#1074#1080#1090#1100' '#1083#1086#1075#1080' '#1074' '#1095#1072#1090
-        TabOrder = 2
-        OnClick = SendLogsToTelegramButtonClick
-      end
-    end
-    object tsLog: TsTabSheet
-      Caption = #1051#1086#1075
     end
   end
   object sSkinProvider1: TsSkinProvider
@@ -4287,12 +4295,18 @@ object MainForm: TMainForm
       '<P>.PixelsPerInch'
       '<P>.Top'
       '<P>.Width'
-      'sPageControl.tsSettings.TelegramNoComboBox.<P>.ItemIndex')
-    Left = 592
+      'sPageControl.tsSettings.ChannelEdit.<P>.Text'
+      'sPageControl.tsSettings.DirectoryEdit.<P>.Text')
+    Left = 392
     Top = 8
   end
   object ActionList1: TActionList
     Left = 144
     Top = 72
+  end
+  object TelegramBot1: TTelegramBot
+    Domain = 'https://api.telegram.org/bot'
+    Left = 261
+    Top = 168
   end
 end
