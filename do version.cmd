@@ -1,17 +1,22 @@
 @echo off
 set /p vers=<"BuildNo.inc"
-set exename=FileToTelegram
+set basename=FileToTelegram
 set release=1.0
-set arc=%exename%_%vers%.rar
-"C:\Program Files\WinRAR\WinRAR.exe" a "%arc%" %exename%.exe
+set arc=%basename%_%vers%.rar
+set ProjectNo=289
+set reponame=%ProjectNo%-%basename%
+set url=https://github.com/Phidel/%reponame%/releases/download/%release%/%arc%
+
+echo %reponame%, release %release%
+echo %arc%
+
+"C:\Program Files\WinRAR\WinRAR.exe" a "%arc%" %basename%.exe
 rem TelegramHelper.exe *.dll data.abs
 
-cd %exename%
-gh release upload %release% ..\%arc% --clobber
-cd ..
+gh release upload %release% %arc% --clobber
 
 move %arc% for-client\ > nul
 
-rem сообщение поместить в буфер обмена
-nircmd.exe clipboard set "https://github.com/Phidel/%exename%/releases/download/%release%/%arc%"
-echo ok - https://github.com/Phidel/%exename%/releases/download/%release%/%arc%
+rem поместить ссылку на скачивание в буфер обмена
+nircmd.exe clipboard set "%url%"
+echo %url%

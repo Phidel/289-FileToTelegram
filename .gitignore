@@ -67,3 +67,4 @@ __recovery/
 #modules/
 
 log*.txt
+for-client/
